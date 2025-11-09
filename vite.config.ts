@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      '@cats': '/src/features/cats',
       '@breeds': '/src/features/breeds',
       '@shared': '/src/shared',
     },

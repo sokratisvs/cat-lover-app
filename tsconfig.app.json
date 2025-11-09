@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@shared/*": ["./src/shared/*"],
+      "@cats/*": ["./src/features/cats/*"],
       "@breeds/*": ["./src/features/breeds/*"]
     },
 
