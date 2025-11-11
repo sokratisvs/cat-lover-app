@@ -5,6 +5,7 @@ import Layout from '@shared/components/Layout';
 import SkeletonLayout from '@shared/components/SkeletonLayout';
 import Loader from '@shared/components/Loader';
 
+const LazyCatModal = lazy(() => import('@cats/components/CatModal'));
 const LazyBreedModal = lazy(() => import('@breeds/components/BreedModal'));
 
 const withSuspense = (
@@ -66,6 +67,11 @@ export const AppRoutes = () => {
 
       {backgroundLocation && (
         <Routes>
+          <Route
+            key={'/cats/:id'}
+            path={'/cats/:id'}
+            element={withSuspense(LazyCatModal)}
+          />
           <Route
             key={'/breeds/:id'}
             path={'/breeds/:id'}

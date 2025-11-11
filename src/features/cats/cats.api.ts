@@ -1,4 +1,4 @@
-import type { CatImage } from '../cats/cats.types';
+import type { CatImage } from '@cats/cats.types';
 import { API_BASE_URL, API_KEY } from '@shared/constants';
 
 export async function fetchRandomCats(

@@ -33,7 +33,7 @@ const Layout = () => {
         </ul>
       </nav>
 
-      <ScrollArea className={clsx('px-8', 'pb-8', 'flex-1 overflow-y-auto')}>
+      <ScrollArea className={clsx('px-8', 'pb-16', 'flex-1 overflow-y-auto')}>
         <Outlet />
       </ScrollArea>
     </div>
