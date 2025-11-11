@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { Modal, Skeleton, ErrorBoundary } from '@shared/components';
+import { Modal, Skeleton } from '@shared/components';
 import { useBreedImages } from '@breeds/hooks/useBreedImages';
 import type { BreedImage } from '@breeds/breeds.types';
 
@@ -124,18 +124,13 @@ const BreedModal = () => {
   }
 
   return (
-    <Modal isOpen={true} onClose={handleClose} hasCloseBtn>
-      <ErrorBoundary fallback={<div>Could not load breed images.</div>}>
-        <div
-          className={clsx(
-            'flex flex-col items-center',
-            'gap-4 w-full min-h-[400px]',
-            'overflow-auto p-4'
-          )}
-        >
-          {content}
-        </div>
-      </ErrorBoundary>
+    <Modal
+      isOpen={true}
+      onClose={handleClose}
+      hasCloseBtn
+      fallbackMessage="Could not load breed images."
+    >
+      {content}
     </Modal>
   );
 };

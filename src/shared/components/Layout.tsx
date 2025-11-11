@@ -1,5 +1,6 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { ErrorBoundary, Notification } from '@shared/components';
 import clsx from 'clsx';
 
 const navLinks = [
@@ -34,7 +35,18 @@ const Layout = () => {
       </nav>
 
       <ScrollArea className={clsx('px-8', 'pb-16', 'flex-1 overflow-y-auto')}>
-        <Outlet />
+        <ErrorBoundary
+          fallback={
+            <Notification
+              type="error"
+              description="Failed to load breed content."
+            />
+          }
+        >
+          <div className="flex flex-col h-full">
+            <Outlet />
+          </div>
+        </ErrorBoundary>
       </ScrollArea>
     </div>
   );

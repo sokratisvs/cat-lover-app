@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { Modal, Skeleton, ErrorBoundary } from '@shared/components';
+import { Modal, Skeleton } from '@shared/components';
 import { useCatImage } from '@cats/hooks/useCatImage';
 
 const CatModal = () => {
@@ -71,18 +71,13 @@ const CatModal = () => {
   }
 
   return (
-    <Modal isOpen={true} onClose={handleClose} hasCloseBtn>
-      <ErrorBoundary fallback={<div>Failed to load cat details.</div>}>
-        <div
-          className={clsx(
-            'flex flex-col items-center',
-            'gap-4 w-full min-h-[400px]',
-            'overflow-auto p-4'
-          )}
-        >
-          {content}
-        </div>
-      </ErrorBoundary>
+    <Modal
+      isOpen={true}
+      onClose={handleClose}
+      hasCloseBtn
+      fallbackMessage="Failed to load cat details."
+    >
+      {content}
     </Modal>
   );
 };

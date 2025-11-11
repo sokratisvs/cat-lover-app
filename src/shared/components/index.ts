@@ -4,4 +4,5 @@ export { default as SkeletonLayout } from './SkeletonLayout';
 export { default as Skeleton } from './Skeleton';
 export { default as Modal } from './Modal';
 export { default as Notification } from './Notification';
+export { default as LoadMoreButton } from './LoadMoreButton';
 export { ErrorBoundary } from './ErrorBoundary';
