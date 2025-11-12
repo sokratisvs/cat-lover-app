@@ -1,10 +1,11 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
 import { useRandomBreeds } from '@breeds/hooks/useRandomeBreeds';
 import {
-  SkeletonLayout,
   Notification,
+  CatGridSkeleton,
   LoadMoreButton,
+  CatGrid,
+  Card,
 } from '@shared/components';
 
 const BreedsPage = () => {
@@ -22,7 +23,9 @@ const BreedsPage = () => {
   const location = useLocation();
 
   const handleImageBreedClick = (id: string) => {
-    navigate(`/breeds/${id}`, { state: { backgroundLocation: location } });
+    navigate(`/breeds/${id}`, {
+      state: { backgroundLocation: location.pathname },
+    });
   };
 
   const flattenedBreeds = (breeds?.pages ?? []).flat();
@@ -30,7 +33,7 @@ const BreedsPage = () => {
   if (isLoading)
     return (
       <div className="flex flex-col h-full">
-        <SkeletonLayout />
+        <CatGridSkeleton />
       </div>
     );
 
@@ -46,55 +49,28 @@ const BreedsPage = () => {
 
   return (
     <>
-      <div
-        className={clsx(
-          'grid',
-          'grid-cols-1',
-          'sm:grid-cols-2',
-          'md:grid-cols-3',
-          'lg:grid-cols-4',
-          'xl:grid-cols-5',
-          'gap-6',
-          'justify-items-center',
-          'items-start',
-          'flex-1',
-          'min-h-full'
-        )}
-      >
+      <CatGrid>
         {flattenedBreeds.map((breed) => {
           if (!breed.image?.url) {
             return null;
           }
           return (
-            <div
-              key={breed.id}
-              onClick={() => handleImageBreedClick(breed.id)}
-              className={clsx(
-                'cursor-pointer',
-                'rounded-lg',
-                'overflow-hidden',
-                'bg-gray-800',
-                'hover:bg-gray-700',
-                'transition',
-                'shadow-md'
-              )}
-            >
-              <img
-                src={breed.image.url}
-                alt="Cat"
-                className="w-full h-48 object-cover rounded-md"
-              />
-            </div>
+            <Card
+              key={`${breed.id}`}
+              catId={breed.id}
+              imageUrl={breed.image.url}
+              onClick={handleImageBreedClick}
+              alt="breed"
+            />
           );
         })}
-      </div>
-      {hasNextPage && (
-        <LoadMoreButton
-          onClick={() => fetchNextPage()}
-          isLoading={isFetchingNextPage}
-          label="Load more breeds"
-        />
-      )}
+      </CatGrid>
+      <LoadMoreButton
+        onClick={() => fetchNextPage()}
+        isLoading={isFetchingNextPage}
+        label="Load more breeds"
+        disabled={!hasNextPage}
+      />
     </>
   );
 };

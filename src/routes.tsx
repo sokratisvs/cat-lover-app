@@ -2,7 +2,7 @@ import { lazy, Suspense, type ComponentType } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { CatsPage, BreedsPage, FavouritesPage, NotFoundPage } from './pages';
 import Layout from '@shared/components/Layout';
-import SkeletonLayout from '@shared/components/SkeletonLayout';
+import CatGridSkeleton from '@shared/components/CatGridSkeleton';
 import Loader from '@shared/components/Loader';
 
 const LazyCatModal = lazy(() => import('@cats/components/CatModal'));
@@ -26,23 +26,23 @@ interface AppRoute {
 const mainRoutes: AppRoute[] = [
   {
     index: true,
-    element: withSuspense(CatsPage, SkeletonLayout),
+    element: withSuspense(CatsPage, CatGridSkeleton),
   },
   {
     path: 'cats',
-    element: withSuspense(CatsPage, SkeletonLayout),
+    element: withSuspense(CatsPage, CatGridSkeleton),
   },
   {
     path: 'breeds',
-    element: withSuspense(BreedsPage, SkeletonLayout),
+    element: withSuspense(BreedsPage, CatGridSkeleton),
   },
   {
     path: 'favourites',
-    element: withSuspense(FavouritesPage, SkeletonLayout),
+    element: withSuspense(FavouritesPage, CatGridSkeleton),
   },
   {
     path: '*',
-    element: withSuspense(NotFoundPage, SkeletonLayout),
+    element: withSuspense(NotFoundPage, CatGridSkeleton),
   },
 ];
 

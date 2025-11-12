@@ -1,9 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
 import {
-  SkeletonLayout,
   Notification,
+  CatGridSkeleton,
   LoadMoreButton,
+  CatGrid,
+  Card,
 } from '@shared/components';
 import { useRandomCats } from '@cats/hooks/useRandomeCats';
 import React from 'react';
@@ -23,13 +24,15 @@ const CatsPage = () => {
   const location = useLocation();
 
   const handleImageCatClick = (id: string) => {
-    navigate(`/cats/${id}`, { state: { backgroundLocation: location } });
+    navigate(`/cats/${id}`, {
+      state: { backgroundLocation: location.pathname },
+    });
   };
 
   if (isLoading)
     return (
       <>
-        <SkeletonLayout />
+        <CatGridSkeleton />
       </>
     );
 
@@ -45,21 +48,7 @@ const CatsPage = () => {
 
   return (
     <>
-      <div
-        className={clsx(
-          'grid',
-          'grid-cols-1',
-          'sm:grid-cols-2',
-          'md:grid-cols-3',
-          'lg:grid-cols-4',
-          'xl:grid-cols-5',
-          'gap-6',
-          'justify-items-center',
-          'items-start',
-          'flex-1',
-          'min-h-full'
-        )}
-      >
+      <CatGrid>
         {cats?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((cat) => {
@@ -67,37 +56,24 @@ const CatsPage = () => {
                 return null;
               }
               return (
-                <div
+                <Card
                   key={`${pageIndex}-${cat.id}`}
-                  onClick={() => handleImageCatClick(cat.id)}
-                  className={clsx(
-                    'cursor-pointer',
-                    'rounded-lg',
-                    'overflow-hidden',
-                    'bg-gray-800',
-                    'hover:bg-gray-700',
-                    'transition',
-                    'shadow-md'
-                  )}
-                >
-                  <img
-                    src={cat.url}
-                    alt="Cat"
-                    className="w-full h-48 object-cover rounded-md"
-                  />
-                </div>
+                  catId={cat.id}
+                  imageUrl={cat.url}
+                  onClick={handleImageCatClick}
+                  alt="Cat"
+                />
               );
             })}
           </React.Fragment>
         ))}
-      </div>
-      {hasNextPage && (
-        <LoadMoreButton
-          onClick={() => fetchNextPage()}
-          isLoading={isFetchingNextPage}
-          label="Load more cats"
-        />
-      )}
+      </CatGrid>
+      <LoadMoreButton
+        onClick={() => fetchNextPage()}
+        isLoading={isFetchingNextPage}
+        disabled={!hasNextPage}
+        label="Load more cats"
+      />
     </>
   );
 };

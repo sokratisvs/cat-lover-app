@@ -4,23 +4,29 @@ import clsx from 'clsx';
 
 interface LoadMoreButtonProps {
   onClick: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
+  disabled: boolean;
   label: string;
 }
 
-const LoadMoreButton = ({ onClick, isLoading, label }: LoadMoreButtonProps) => {
+const LoadMoreButton = ({
+  onClick,
+  isLoading = false,
+  disabled = true,
+  label,
+}: LoadMoreButtonProps) => {
   return (
     <div
       className={clsx(
         'fixed bottom-0 left-0 right-0 z-10',
-        'bg-white dark:bg-neutral-900',
+        'bg-gray-700 dark:bg-neutral-900',
         'p-4 w-full flex justify-center'
       )}
     >
       <Button
         type="button"
         onClick={onClick}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
         className={clsx(
           'px-4 py-2',
           'rounded-lg',
