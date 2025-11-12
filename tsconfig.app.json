@@ -20,7 +20,8 @@
       "@/*": ["./src/*"],
       "@shared/*": ["./src/shared/*"],
       "@cats/*": ["./src/features/cats/*"],
-      "@breeds/*": ["./src/features/breeds/*"]
+      "@breeds/*": ["./src/features/breeds/*"],
+      "@favourites/*": ["./src/features/favourites/*"]
     },
 
     /* Linting */
