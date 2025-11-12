@@ -1,12 +1,19 @@
 import type { CatBreedSummary, BreedImage } from '@breeds/breeds.types';
-import { API_BASE_URL, API_KEY } from '@shared/constants';
+import {
+  API_BASE_URL,
+  defaultHeaders,
+  RESULTS_PER_PAGE,
+} from '@shared/constants';
 
 export async function fetchRandomBreeds(
   page: number,
-  limit = 10
+  limit = RESULTS_PER_PAGE
 ): Promise<CatBreedSummary[]> {
   const res = await fetch(
-    `${API_BASE_URL}/breeds?limit=${limit}&page=${page}&api_key=${API_KEY}`
+    `${API_BASE_URL}/breeds?limit=${limit}&page=${page}`,
+    {
+      headers: defaultHeaders,
+    }
   );
   if (!res.ok) throw new Error('Failed to fetch random breeds');
   return res.json();

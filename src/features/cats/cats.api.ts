@@ -1,19 +1,28 @@
 import type { CatImage } from '@cats/cats.types';
-import { API_BASE_URL, API_KEY } from '@shared/constants';
+import {
+  API_BASE_URL,
+  defaultHeaders,
+  RESULTS_PER_PAGE,
+} from '@shared/constants';
 
 export async function fetchRandomCats(
   page: number,
-  limit = 10
+  limit = RESULTS_PER_PAGE
 ): Promise<CatImage[]> {
   const res = await fetch(
-    `${API_BASE_URL}/images/search?limit=${limit}&page=${page}&has_breeds=1&api_key=${API_KEY}`
+    `${API_BASE_URL}/images/search?limit=${limit}&page=${page}&has_breeds=1`,
+    {
+      headers: defaultHeaders,
+    }
   );
   if (!res.ok) throw new Error('Failed to fetch random cats');
   return res.json();
 }
 
 export async function fetchCatImageById(imageId: string): Promise<CatImage> {
-  const res = await fetch(`${API_BASE_URL}/images/${imageId}`);
+  const res = await fetch(`${API_BASE_URL}/images/${imageId}`, {
+    headers: defaultHeaders,
+  });
   if (!res.ok) throw new Error('Failed to fetch cat image');
   return res.json();
 }
