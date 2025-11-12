@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRandomBreeds } from '@breeds/hooks/useRandomeBreeds';
 import {
-  Notification,
   CatGridSkeleton,
   LoadMoreButton,
   CatGrid,
   Card,
 } from '@shared/components';
+import { useNotification } from '@/shared/utils/useNotification';
 
 const BreedsPage = () => {
   const {
@@ -21,6 +21,7 @@ const BreedsPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { error: notifyError } = useNotification();
 
   const handleImageBreedClick = (id: string) => {
     navigate(`/breeds/${id}`, {
@@ -37,15 +38,7 @@ const BreedsPage = () => {
       </div>
     );
 
-  if (isError)
-    return (
-      <div className="flex flex-col h-full justify-center items-center">
-        <Notification
-          type="error"
-          description={error?.message || 'An error occurred'}
-        />
-      </div>
-    );
+  if (isError) return notifyError(`${error?.message}`);
 
   return (
     <>

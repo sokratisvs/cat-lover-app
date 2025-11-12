@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  Notification,
   CatGridSkeleton,
   LoadMoreButton,
   CatGrid,
   Card,
 } from '@shared/components';
 import { useFavourites } from '@favourites/hooks/useFavourites';
+import { useNotification } from '@/shared/utils/useNotification';
 import React from 'react';
 
 const FavouritesPage = () => {
@@ -22,6 +22,7 @@ const FavouritesPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { error: notifyError } = useNotification();
 
   const handleImageCatClick = (id: string) => {
     navigate(`/cats/${id}`, {
@@ -36,15 +37,7 @@ const FavouritesPage = () => {
       </>
     );
 
-  if (isError)
-    return (
-      <>
-        <Notification
-          type="error"
-          description={error?.message || 'An error occured'}
-        />
-      </>
-    );
+  if (isError) return notifyError(`${error?.message}`);
 
   return (
     <>

@@ -1,7 +1,9 @@
 import { Outlet, NavLink } from 'react-router-dom';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { ErrorBoundary, Notification } from '@shared/components';
 import clsx from 'clsx';
+import { Toaster } from 'sonner';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ErrorBoundary } from '@shared/components';
+import { ErrorFallback } from '@/shared/components/ErrorFallback';
 
 const navLinks = [
   { to: '/cats', label: 'Cats' },
@@ -19,12 +21,18 @@ const Layout = () => {
               <NavLink
                 to={link.to}
                 className={({ isActive, isPending }) =>
-                  clsx('px-2 py-1 transition-colors duration-150', {
-                    'text-gray cursor-not-allowed': isPending,
-                    'border-solid border-b border-indigo-500 font-semibold':
-                      isActive,
-                    'hover:text-gray-300': !isActive && !isPending,
-                  })
+                  clsx(
+                    'px-4 py-2',
+                    'rounded-lg',
+                    'transition-colors duration-150',
+                    'font-medium',
+                    {
+                      'text-gray-400 cursor-not-allowed': isPending,
+                      'bg-indigo-600 text-white hover:bg-indigo-500': isActive,
+                      'text-gray-300 hover:text-white hover:bg-gray-700':
+                        !isActive && !isPending,
+                    }
+                  )
                 }
               >
                 {link.label}
@@ -35,19 +43,13 @@ const Layout = () => {
       </nav>
 
       <ScrollArea className={clsx('px-8', 'pb-16', 'flex-1 overflow-y-auto')}>
-        <ErrorBoundary
-          fallback={
-            <Notification
-              type="error"
-              description="Failed to load breed content."
-            />
-          }
-        >
+        <ErrorBoundary fallback={<ErrorFallback />}>
           <div className="flex flex-col h-full">
             <Outlet />
           </div>
         </ErrorBoundary>
       </ScrollArea>
+      <Toaster richColors position="top-center" />
     </div>
   );
 };
