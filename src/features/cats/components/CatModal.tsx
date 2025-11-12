@@ -1,6 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { Modal, Skeleton } from '@shared/components';
+import { FavouriteButton } from '@/features/favourites/components/FavouriteButton';
 import { useCatImage } from '@cats/hooks/useCatImage';
 
 const CatModal = () => {
@@ -36,10 +37,11 @@ const CatModal = () => {
         className={clsx(
           'w-full min-h-[350px]',
           'flex items-center justify-center',
-          'text-center p-4'
+          'text-center p-4',
+          'text-foreground'
         )}
       >
-        Could not load image
+        <p className="text-lg">Could not load image</p>
       </div>
     );
   } else {
@@ -49,7 +51,8 @@ const CatModal = () => {
         <div
           className={clsx(
             'h-[250px] sm:h-[300px] md:h-[350px]',
-            'flex items-center justify-center w-full flex-shrink-0'
+            'flex items-center justify-center w-full flex-shrink-0',
+            'relative'
           )}
         >
           <img
@@ -57,13 +60,20 @@ const CatModal = () => {
             alt={breed?.name ?? 'Cat'}
             className="max-h-full max-w-full rounded-xl object-contain"
           />
+          <div
+            className={clsx(
+              'absolute bottom-0 right-4 z-10',
+              'bg-background/80 backdrop-blur-sm',
+              'rounded-md shadow-lg'
+            )}
+          >
+            <FavouriteButton imageId={data.id} />
+          </div>
         </div>
         {breed && (
-          <div className="text-center">
+          <div className="text-center text-gray-800 dark:text-gray-400">
             <h2 className="text-xl font-semibold mb-1">{breed.name}</h2>
-            <p className="text-sm text-gray-800 dark:text-gray-400">
-              {breed.temperament}
-            </p>
+            <p className="text-sm">{breed.temperament}</p>
           </div>
         )}
       </>
