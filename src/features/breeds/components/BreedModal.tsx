@@ -22,6 +22,22 @@ const BreedModal = () => {
     }
   }, [firstImage]);
 
+  const navigateCatImage = (id: string) => {
+    navigate(`/cats/${id}`, {
+      state: {
+        backgroundLocation:
+          location.state?.backgroundLocation?.pathname || '/breeds',
+      },
+    });
+  };
+
+  const clickHandler = (image: BreedImage) => {
+    setSelectedImage(image);
+    if (image.id) {
+      navigateCatImage(image.id);
+    }
+  };
+
   const handleClose = () => {
     navigate(location.state?.backgroundLocation?.pathname || '/breeds', {
       replace: true,
@@ -70,22 +86,6 @@ const BreedModal = () => {
   } else {
     content = (
       <>
-        {selectedImage && (
-          <div
-            className={clsx(
-              'h-[250px] sm:h-[300px] md:h-[350px]',
-              'flex items-center justify-center',
-              'w-full flex-shrink-0'
-            )}
-          >
-            <img
-              src={selectedImage.url}
-              alt={selectedImage?.id ?? 'Cat'}
-              className="max-h-full max-w-full rounded-xl object-contain"
-            />
-          </div>
-        )}
-
         <div
           className={clsx(
             'h-[80px] sm:h-[100px]',
@@ -99,7 +99,7 @@ const BreedModal = () => {
               <button
                 key={image.id}
                 type="button"
-                onClick={() => setSelectedImage(image)}
+                onClick={() => clickHandler(image)}
                 className={clsx(
                   'rounded',
                   'focus:outline-none',
@@ -111,7 +111,7 @@ const BreedModal = () => {
                 <img
                   src={image.url}
                   alt={image?.id ?? 'Cat'}
-                  className="w-16 h-16 rounded object-cover"
+                  className="w-32 h-32 rounded object-cover"
                   width={32}
                   height={32}
                 />

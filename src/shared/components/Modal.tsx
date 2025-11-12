@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { TriangleAlertIcon } from '@/components/icons';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { ErrorBoundary } from './ErrorBoundary';
 import clsx from 'clsx';
@@ -35,7 +36,26 @@ const Modal = ({
           <DialogTitle>Modal Title</DialogTitle>
         </VisuallyHidden.Root>
         {hasCloseBtn && <DialogClose onClick={handleClose}></DialogClose>}
-        <ErrorBoundary fallback={<div>{fallbackMessage}</div>}>
+        <ErrorBoundary
+          fallback={
+            <div
+              className={clsx(
+                'flex flex-col items-center justify-center',
+                'w-full min-h-[400px]',
+                'text-center p-4',
+                'text-foreground'
+              )}
+            >
+              <TriangleAlertIcon
+                className={clsx(
+                  'w-24 h-24',
+                  'fill-muted stroke-muted-foreground'
+                )}
+              />
+              <p className="text-lg">{fallbackMessage}</p>
+            </div>
+          }
+        >
           <div
             className={clsx(
               'flex flex-col items-center',
