@@ -7,7 +7,7 @@ import {
 } from '@shared/components';
 import { useRandomCats } from '@cats/hooks/useRandomeCats';
 import { useNotification } from '@/shared/utils/useNotification';
-import React from 'react';
+import { Fragment } from 'react';
 
 const CatsPage = () => {
   const {
@@ -37,13 +37,16 @@ const CatsPage = () => {
       </>
     );
 
-  if (isError) return notifyError(`${error?.message}`);
+  if (isError) {
+    notifyError(`${error?.message}`);
+    return null;
+  }
 
   return (
     <>
       <CatGrid>
         {cats?.pages.map((page, pageIndex) => (
-          <React.Fragment key={pageIndex}>
+          <Fragment key={pageIndex}>
             {page.map((cat) => {
               if (!cat?.url) {
                 return null;
@@ -58,7 +61,7 @@ const CatsPage = () => {
                 />
               );
             })}
-          </React.Fragment>
+          </Fragment>
         ))}
       </CatGrid>
       <LoadMoreButton

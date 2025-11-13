@@ -38,7 +38,10 @@ const BreedsPage = () => {
       </div>
     );
 
-  if (isError) return notifyError(`${error?.message}`);
+  if (isError) {
+    notifyError(`${error?.message}`);
+    return null;
+  }
 
   return (
     <>

@@ -7,7 +7,7 @@ import {
 } from '@shared/components';
 import { useFavourites } from '@favourites/hooks/useFavourites';
 import { useNotification } from '@/shared/utils/useNotification';
-import React from 'react';
+import { Fragment } from 'react';
 
 const FavouritesPage = () => {
   const {
@@ -37,13 +37,16 @@ const FavouritesPage = () => {
       </>
     );
 
-  if (isError) return notifyError(`${error?.message}`);
+  if (isError) {
+    notifyError(`${error?.message}`);
+    return null;
+  }
 
   return (
     <>
       <CatGrid>
         {favourites?.pages.map((page, pageIndex) => (
-          <React.Fragment key={pageIndex}>
+          <Fragment key={pageIndex}>
             {page.map((favourite) => {
               if (!favourite?.image?.url) {
                 return null;
@@ -58,7 +61,7 @@ const FavouritesPage = () => {
                 />
               );
             })}
-          </React.Fragment>
+          </Fragment>
         ))}
       </CatGrid>
       <LoadMoreButton
