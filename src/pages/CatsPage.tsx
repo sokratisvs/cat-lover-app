@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import {
   CatGridSkeleton,
   ActionButton,
@@ -7,6 +6,7 @@ import {
   ErrorFallback,
 } from '@shared/components';
 import { useRandomCats } from '@cats/hooks/useRandomeCats';
+import { useModalNavigation } from '@shared/utils/useModalNavigation';
 import { Fragment } from 'react';
 
 const CatsPage = () => {
@@ -20,13 +20,10 @@ const CatsPage = () => {
     isFetchingNextPage,
   } = useRandomCats();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { openModal } = useModalNavigation();
 
   const handleImageCatClick = (id: string) => {
-    navigate(`/cats/${id}`, {
-      state: { backgroundLocation: location.pathname },
-    });
+    openModal('cats', id);
   };
 
   if (isLoading)

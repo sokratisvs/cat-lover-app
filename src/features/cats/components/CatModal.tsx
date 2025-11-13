@@ -1,20 +1,18 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { Modal, Skeleton } from '@shared/components';
 import { FavouriteButton } from '@/features/favourites/components/FavouriteButton';
 import { useCatImage } from '@cats/hooks/useCatImage';
+import { useModalNavigation } from '@shared/utils/useModalNavigation';
 
 const CatModal = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { closeModal } = useModalNavigation();
 
   const { data, isLoading, isError } = useCatImage(id ?? '');
 
   const handleClose = () => {
-    navigate(location.state?.backgroundLocation?.pathname || '/cats', {
-      replace: true,
-    });
+    closeModal('/cats');
   };
 
   let content;

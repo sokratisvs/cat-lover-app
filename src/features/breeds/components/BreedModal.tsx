@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { Modal, Skeleton } from '@shared/components';
 import { useBreedImages } from '@breeds/hooks/useBreedImages';
+import { useModalNavigation } from '@shared/utils/useModalNavigation';
 import type { BreedImage } from '@breeds/breeds.types';
 
 const BreedModal = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { openModal, closeModal } = useModalNavigation();
   const { data, isLoading, isError } = useBreedImages(id ?? '');
 
   const firstImage: BreedImage | undefined = data?.[0];
@@ -22,26 +22,15 @@ const BreedModal = () => {
     }
   }, [firstImage]);
 
-  const navigateCatImage = (id: string) => {
-    navigate(`/cats/${id}`, {
-      state: {
-        backgroundLocation:
-          location.state?.backgroundLocation?.pathname || '/breeds',
-      },
-    });
-  };
-
   const clickHandler = (image: BreedImage) => {
     setSelectedImage(image);
     if (image.id) {
-      navigateCatImage(image.id);
+      openModal('cats', image.id);
     }
   };
 
   const handleClose = () => {
-    navigate(location.state?.backgroundLocation?.pathname || '/breeds', {
-      replace: true,
-    });
+    closeModal('/breeds');
   };
 
   let content;

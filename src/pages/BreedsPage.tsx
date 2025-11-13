@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useRandomBreeds } from '@breeds/hooks/useRandomeBreeds';
 import {
   CatGridSkeleton,
@@ -7,6 +6,7 @@ import {
   Card,
   ErrorFallback,
 } from '@shared/components';
+import { useModalNavigation } from '@shared/utils/useModalNavigation';
 
 const BreedsPage = () => {
   const {
@@ -19,13 +19,10 @@ const BreedsPage = () => {
     isFetchingNextPage,
   } = useRandomBreeds();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { openModal } = useModalNavigation();
 
   const handleImageBreedClick = (id: string) => {
-    navigate(`/breeds/${id}`, {
-      state: { backgroundLocation: location.pathname },
-    });
+    openModal('breeds', id);
   };
 
   const flattenedBreeds = (breeds?.pages ?? []).flat();

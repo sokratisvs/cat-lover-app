@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import {
   CatGridSkeleton,
   CatGrid,
@@ -6,17 +5,15 @@ import {
   ErrorFallback,
 } from '@shared/components';
 import { useFavourites } from '@favourites/hooks/useFavourites';
+import { useModalNavigation } from '@shared/utils/useModalNavigation';
 
 const FavouritesPage = () => {
   const { data: favourites, isLoading, isError, error } = useFavourites();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { openModal } = useModalNavigation();
 
   const handleImageCatClick = (id: string) => {
-    navigate(`/cats/${id}`, {
-      state: { backgroundLocation: location.pathname },
-    });
+    openModal('cats', id);
   };
 
   if (isLoading)
