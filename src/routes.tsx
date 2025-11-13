@@ -48,11 +48,30 @@ const mainRoutes: AppRoute[] = [
 
 export const AppRoutes = () => {
   const location = useLocation();
-  const backgroundLocation = location.state?.backgroundLocation;
+  const background = location.state?.backgroundLocation;
+
+  const getBackgroundLocation = () => {
+    if (background) {
+      return typeof background === 'string'
+        ? { ...location, pathname: background }
+        : background;
+    }
+    if (location.pathname.startsWith('/cats/')) {
+      return { ...location, pathname: '/cats' };
+    }
+    if (location.pathname.startsWith('/breeds/')) {
+      return { ...location, pathname: '/breeds' };
+    }
+    return location;
+  };
+
+  const isModalRoute =
+    location.pathname.startsWith('/cats/') ||
+    location.pathname.startsWith('/breeds/');
 
   return (
     <>
-      <Routes location={backgroundLocation || location}>
+      <Routes location={getBackgroundLocation()}>
         <Route path="/" element={<Layout />}>
           {mainRoutes.map((route) => (
             <Route
@@ -65,18 +84,10 @@ export const AppRoutes = () => {
         </Route>
       </Routes>
 
-      {backgroundLocation && (
+      {isModalRoute && (
         <Routes>
-          <Route
-            key={'/cats/:id'}
-            path={'/cats/:id'}
-            element={withSuspense(LazyCatModal)}
-          />
-          <Route
-            key={'/breeds/:id'}
-            path={'/breeds/:id'}
-            element={withSuspense(LazyBreedModal)}
-          />
+          <Route path="/cats/:id" element={withSuspense(LazyCatModal)} />
+          <Route path="/breeds/:id" element={withSuspense(LazyBreedModal)} />
         </Routes>
       )}
     </>

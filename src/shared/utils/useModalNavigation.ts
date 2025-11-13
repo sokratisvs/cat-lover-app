@@ -7,10 +7,16 @@ export const useModalNavigation = () => {
 
   const openModal = useCallback(
     (path: string, id: string) => {
+      // Preserve existing backgroundLocation or use current location
+      const bgLocation = location.state?.backgroundLocation || {
+        pathname: location.pathname,
+        search: location.search,
+        hash: location.hash,
+      };
+
       navigate(`/${path}/${id}`, {
         state: {
-          backgroundLocation:
-            location.state?.backgroundLocation || location.pathname,
+          backgroundLocation: bgLocation,
         },
       });
     },
