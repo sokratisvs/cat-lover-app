@@ -1,16 +1,16 @@
 import { useOptimistic, useTransition } from 'react';
-import { useFavourites, useAddFavourite, useRemoveFavourite } from '../hooks';
+import { useFavourites, useAddFavourite, useRemoveFavourites } from '../hooks';
 import { Button } from '@/components/ui/button';
 import { HeartIcon } from '@/components/icons';
 
-interface Props {
+interface FavouriteButtonProps {
   imageId: string;
 }
 
-export function FavouriteButton({ imageId }: Props) {
+export function FavouriteButton({ imageId }: FavouriteButtonProps) {
   const { data: favourites } = useFavourites();
   const addFavourite = useAddFavourite();
-  const removeFavourite = useRemoveFavourite();
+  const removeFavourite = useRemoveFavourites();
   const [isPending, startTransition] = useTransition();
 
   const allFavourites = favourites ?? [];
@@ -35,14 +35,12 @@ export function FavouriteButton({ imageId }: Props) {
         } else {
           const fav = allFavourites.find((f) => f.image_id === imageId);
           if (fav) {
-            await removeFavourite.mutateAsync(fav.id);
+            await removeFavourite.mutateAsync([fav.id]);
           }
         }
       } catch (error) {
-        // rollback
         setOptimisticIsFav(!next);
       }
-      console.log('optimisticIsFav', optimisticIsFav);
     });
   }
 

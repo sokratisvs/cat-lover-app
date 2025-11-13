@@ -1,5 +1,5 @@
 import { useFavourites } from './useFavourites';
 import { useAddFavourite } from './useAddFavourite';
-import { useRemoveFavourite } from './useRemoveFavorite';
+import { useRemoveFavourites } from './useRemoveFavourites';
 
-export { useFavourites, useAddFavourite, useRemoveFavourite };
+export { useFavourites, useAddFavourite, useRemoveFavourites };

@@ -24,10 +24,14 @@ export async function addFavourite(imageId: string): Promise<Favourite> {
   return res.json();
 }
 
-export async function removeFavourite(favouriteId: number): Promise<void> {
+async function removeFavourite(favouriteId: number): Promise<void> {
   const res = await fetch(`${API_BASE_URL}/favourites/${favouriteId}`, {
     method: 'DELETE',
     headers: defaultHeaders,
   });
   if (!res.ok) throw new Error('Failed to remove favourite');
+}
+
+export async function removeFavourites(ids: number[]): Promise<void> {
+  await Promise.all(ids.map((id) => removeFavourite(id)));
 }
