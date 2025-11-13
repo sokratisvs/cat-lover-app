@@ -13,8 +13,8 @@ export function FavouriteButton({ imageId }: Props) {
   const removeFavourite = useRemoveFavourite();
   const [isPending, startTransition] = useTransition();
 
-  const allFavourites = favourites?.pages.flat() ?? [];
-  console.log('allFavourites', allFavourites);
+  const allFavourites = favourites ?? [];
+
   const isInitiallyFav = !!allFavourites.some((f) => f.image_id === imageId);
 
   const [optimisticIsFav, setOptimisticIsFav] = useOptimistic(

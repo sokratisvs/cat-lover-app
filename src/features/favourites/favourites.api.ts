@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_KEY, RESULTS_PER_PAGE } from '@shared/constants';
+import { API_BASE_URL, API_KEY } from '@shared/constants';
 import type { Favourite } from './favourites.types';
 
 const defaultHeaders = {
@@ -6,16 +6,10 @@ const defaultHeaders = {
   'x-api-key': API_KEY,
 };
 
-export async function fetchFavourites(
-  page: number,
-  limit = RESULTS_PER_PAGE
-): Promise<Favourite[]> {
-  const res = await fetch(
-    `${API_BASE_URL}/favourites?limit=${limit}&page=${page}&order=DESC&api_key=${API_KEY}`,
-    {
-      headers: defaultHeaders,
-    }
-  );
+export async function fetchFavourites(): Promise<Favourite[]> {
+  const res = await fetch(`${API_BASE_URL}/favourites?order=DESC`, {
+    headers: defaultHeaders,
+  });
   if (!res.ok) throw new Error('Failed to fetch favourites');
   return res.json();
 }
