@@ -4,4 +4,5 @@
 export { Heart as HeartIcon } from 'lucide-react';
 export { AlertTriangle as TriangleAlertIcon } from 'lucide-react';
 export { Cat as CatIcon } from 'lucide-react';
+export { Check as CheckIcon } from 'lucide-react';
 export { X } from 'lucide-react';
