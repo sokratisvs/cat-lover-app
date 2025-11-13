@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ComponentType } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { CatsPage, BreedsPage, FavouritesPage, NotFoundPage } from './pages';
 import Layout from '@shared/components/Layout';
 import CatGridSkeleton from '@shared/components/CatGridSkeleton';
@@ -26,7 +26,7 @@ interface AppRoute {
 const mainRoutes: AppRoute[] = [
   {
     index: true,
-    element: withSuspense(CatsPage, CatGridSkeleton),
+    element: <Navigate to="/cats" replace />,
   },
   {
     path: 'cats',

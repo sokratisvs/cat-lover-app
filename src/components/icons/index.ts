@@ -3,4 +3,5 @@
 // Only these 3 icons will be included in the bundle, reducing size from ~1009kb to ~few kb
 export { Heart as HeartIcon } from 'lucide-react';
 export { AlertTriangle as TriangleAlertIcon } from 'lucide-react';
+export { Cat as CatIcon } from 'lucide-react';
 export { X } from 'lucide-react';
